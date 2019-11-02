@@ -3,43 +3,50 @@
 #include <stdlib.h>
 
 // Check if power by two of integer
-bool isPowerOfTwo(int n) {
-    if(n < 0 ) {
-        return false;
-    }
-
-    int count_ones = 0;
-
-    /** bitwise operation to check whether there is a 1 bit that occurs exactly once.
-     * Thus indicating a power of two because it's a positive Integer.
-     */
-    while (n != 0) {
-        count_ones += n & 1;
-        n = n >> 1;
-    }
-
-    return count_ones == 1;
-}
+bool isPowerOfTwo(int n);
 
 // Gets the most significant 1 bit index of an Integer
+int getMostSignificantBitIndex(int n);
+
+int getSizeOfArray();
+
+int *getNumbersArrayPointerFromInput(int size_of_array); 
+
+void printNumbersOfPowerByTwoInfo(int *numbers_array_pointer, int size_of_array);
+
+int main() {
+    int size_of_array = getSizeOfArray();
+    int *numbers_array_pointer = getNumbersArrayPointerFromInput(size_of_array);
+
+    printNumbersOfPowerByTwoInfo(numbers_array_pointer, size_of_array);
+
+    free(numbers_array_pointer);
+
+    return 0;
+}
+
+bool isPowerOfTwo(int n) {
+    return (bool)(n & (n-1))
+}
+
 int getMostSignificantBitIndex(int n) {
     int count = 0;
 
-    while (n != 0) {
-        count += 1;
+    while (n != 1) {
+        ++count;
         n = n >> 1;
     }
 
-    return count - 1;
+    return count;
 }
 
 int getSizeOfArray() {
     int size_of_input;
 
     printf("Enter size of input:\n");
-    scanf("%d", &size_of_input);
+    bool is_valid = (bool)scanf("%d", &size_of_input);
 
-    if (size_of_input <= 0) {
+    if (!is_valid && size_of_input <= 0) {
         printf("Invalid size\n");
         exit(0);
     }
@@ -87,15 +94,4 @@ void printNumbersOfPowerByTwoInfo(int *numbers_array_pointer, int size_of_array)
     }
 
     printf("Total exponent sum is %d\n", exponent_sum);
-}
-
-int main() {
-    int size_of_array = getSizeOfArray();
-    int *numbers_array_pointer = getNumbersArrayPointerFromInput(size_of_array);
-
-    printNumbersOfPowerByTwoInfo(numbers_array_pointer, size_of_array);
-
-    free(numbers_array_pointer);
-
-    return 0;
 }
